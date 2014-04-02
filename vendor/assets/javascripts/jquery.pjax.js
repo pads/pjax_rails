@@ -416,7 +416,9 @@ function onPjaxPopstate(event) {
 
         // Cache current container before replacement and inform the
         // cache which direction the history shifted.
-        cachePop(direction, pjax.state.id, container.clone().contents())
+        if (pjax.defaults.cacheOnPopstate) {
+          cachePop(direction, pjax.state.id, container.clone().contents())
+        }
       }
 
       var popstateEvent = $.Event('pjax:popstate', {
@@ -793,7 +795,8 @@ function enable() {
     dataType: 'html',
     scrollTo: 0,
     maxCacheLength: 20,
-    version: findVersion
+    version: findVersion,
+    cacheOnPopstate: true
   }
   $(window).on('popstate.pjax', onPjaxPopstate)
 }
